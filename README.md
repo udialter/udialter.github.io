@@ -1,4 +1,9 @@
-# udialter.github.io
+# DETERMINING NEGLIGIBLE ASSOCIATIONS IN REGRESSION 
+### Alter & Counsell (2023)
 
 
-[Dashboard](Alter-and-Counsell--2023--Interactive-Dashboard.html) 
+[Interactive dashboard](Alter-and-Counsell--2023--Interactive-Dashboard.html) 
+
+[Paper in TQMP](https://www.tqmp.org/RegularArticles/vol19-1/p059/)
+
+[Open materials and additional resources](https://osf.io/w96xe/)
