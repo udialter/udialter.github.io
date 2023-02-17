@@ -8,7 +8,7 @@ output:
     social: menu
     source_code: embed
     navbar:
-      - { icon: "Paper on TQMP", href: "https://www.tqmp.org/RegularArticles/vol19-1/p059/index.html", align: right }  
+      - { title: "Paper on TQMP", href: "https://www.tqmp.org/RegularArticles/vol19-1/p059/index.html", align: right }  
       - { title: "Shiny app", href: "https://udialter.shinyapps.io/negreg-shiny/", align: right }
       - { title: "negligible R package", href: "https://github.com/cribbie/negligible/", align: right }
       - { title: "Additional materials", href: "https://osf.io/w96xe/", align: right }
