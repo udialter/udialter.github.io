@@ -14,4 +14,4 @@
 
 
 
-[unlreated](L1 pred centering MLM.gif)
+[unlreated](centeringMLM.gif)
