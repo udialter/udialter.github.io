@@ -14,4 +14,5 @@
 
 
 
-[unlreated](centeringMLM.gif)
+[MLM centring](centeringMLM.gif)
+[IDDVs examples](presentation-Examples.html) 
