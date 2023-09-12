@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Udi Alter">
+
+<title>Start Using the neg.reg Function</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="welcome to neg.reg_files/libs/clipboard/clipboard.min.js"></script>
+<script src="welcome to neg.reg_files/libs/quarto-html/quarto.js"></script>
+<script src="welcome to neg.reg_files/libs/quarto-html/popper.min.js"></script>
+<script src="welcome to neg.reg_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="welcome to neg.reg_files/libs/quarto-html/anchor.min.js"></script>
+<link href="welcome to neg.reg_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="welcome to neg.reg_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="welcome to neg.reg_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="welcome to neg.reg_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="welcome to neg.reg_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="welcome to neg.reg_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="welcome to neg.reg_files/libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Start Using the <code>neg.reg</code> Function</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i></button></div></div>
+            <p class="subtitle lead">From the <code>negligible</code> R package</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Udi Alter </p>
+            </div>
+    </div>
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal">Goal</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
+  </ul></li>
+  <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a></li>
+  <li><a href="#applied-examples" id="toc-applied-examples" class="nav-link" data-scroll-target="#applied-examples">Applied Examples</a>
+  <ul class="collapse">
+  <li><a href="#example-1-unlinking-deliberate-mind-wandering-and-ocd-symptomatology" id="toc-example-1-unlinking-deliberate-mind-wandering-and-ocd-symptomatology" class="nav-link" data-scroll-target="#example-1-unlinking-deliberate-mind-wandering-and-ocd-symptomatology">Example 1: “Unlinking” Deliberate Mind Wandering and OCD Symptomatology</a></li>
+  <li><a href="#example-2-personal-control-moderates-the-association-between-organizational-stability-and-identification" id="toc-example-2-personal-control-moderates-the-association-between-organizational-stability-and-identification" class="nav-link" data-scroll-target="#example-2-personal-control-moderates-the-association-between-organizational-stability-and-identification">Example 2: Personal Control Moderates the Association Between Organizational Stability and Identification</a></li>
+  </ul></li>
+  <li><a href="#additional-features" id="toc-additional-features" class="nav-link" data-scroll-target="#additional-features">Additional Features</a></li>
+  <li><a href="#other-considerations" id="toc-other-considerations" class="nav-link" data-scroll-target="#other-considerations">Other Considerations</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="goal" class="level3">
+<h3 class="anchored" data-anchor-id="goal">Goal</h3>
+<p>This function evaluates <strong>whether a certain predictor variable in a multiple regression model can be considered statistically and practically negligible</strong> according to a predefined interval. i.e., minimally meaningful effect size (MMES)/smallest effect size of interest (SESOI). The effect tested is the (partial) relationship between the predictor of interest and the outcome variable, holding all other predictors constant.</p>
+</section>
+<section id="background" class="level3">
+<h3 class="anchored" data-anchor-id="background">Background</h3>
+<p>Unlike most common null hypothesis significance tests looking to detect a difference or the existence of an effect statistically different than zero, <strong>in negligible effect testing, the hypotheses are flipped: In essence,</strong> <span class="math inline">H_0</span> states that the effect is non-negligible, whereas <span class="math inline">H_1</span> states that the effect is in fact statistically and practically negligible.</p>
+<p>The statistical tests are based on Anderson-Hauck (1983) and Schuirmann’s (1987) Two One-Sided Test (TOST) equivalence testing procedures; namely addressing the question of <strong>whether the estimated effect size (and its associated uncertainty) of a predictor variable in a multiple regression model is smaller than the what the user defines as negligible effect size.</strong> Defining what is considered negligible effect is done by specifying the negligible (equivalence) interval: its upper (<code>eiu</code>) and lower (<code>eil</code>) bounds.</p>
+<p>The negligible (equivalence) interval should be set based on the context of the research. Because the predictor’s effect size can be in either standardized or unstandardized units, setting <code>eil</code> and <code>eiu</code> is a matter of determining what magnitude of the relationship between predictor and outcome in either standardized or unstandardized units is the minimally meaningful effect size given the context of the research.</p>
+</section>
+</section>
+<section id="instructions" class="level2">
+<h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
+<p>There are two main approaches to using <code>neg.reg</code>:</p>
+<ul>
+<li><p>The first <strong>(and recommended)</strong> is by inserting a dataset (<code>data =</code> argument) into the function. If the user/s have access to the dataset, they should use the following set of arguments: <code>data =</code>, <code>formula =</code>, <code>predictor =</code>, <code>bootstrap =</code> (optional), <code>nboot =</code> (optional), and <code>seed =</code> (optional). However, this function also accommodates cases where no dataset is available which is discussed next.</p></li>
+<li><p>The second approach should be used when the dataset is not available. In this case, users can use the following set of arguments instead: <code>b =</code>, <code>se =</code>, <code>n =</code>, and <code>nop =</code>. In either situation, users must specify the negligible interval bounds (<code>eiu =</code> and <code>eil =</code>).</p></li>
+</ul>
+<p>Other optional arguments and features include: <code>alpha =</code>, <code>std =</code>, <code>test =</code>, <code>plots =</code>, and <code>saveplots =</code>.</p>
+</section>
+<section id="applied-examples" class="level2">
+<h2 class="anchored" data-anchor-id="applied-examples">Applied Examples</h2>
+<section id="example-1-unlinking-deliberate-mind-wandering-and-ocd-symptomatology" class="level3">
+<h3 class="anchored" data-anchor-id="example-1-unlinking-deliberate-mind-wandering-and-ocd-symptomatology">Example 1: “Unlinking” Deliberate Mind Wandering and OCD Symptomatology</h3>
+<p>Our first example comes from <a href="https://psycnet.apa.org/doiLanding?doi=10.1037%2Fa0031438">Seli et al.&nbsp;(2017)</a> where the authors investigated the relationship between everyday experiences of mind wandering and OCD symptomatology. Seli and colleagues make a clear distinction between two types of mind wandering: the first is an unintentional, spontaneous mind wandering (MW-S), and the second is a voluntary and deliberate off-task thought (MW-D). This distinction is important because the authors hypothesized that MW-S will show a meaningful relationship with each of the four dimensions of OCD (contamination, responsibility for harm and mistakes, unacceptable thoughts, and symmetry/completeness) whereas MW-D will demonstrate a negligible, or no, association.</p>
+<p>Because <a href="https://psycnet.apa.org/doiLanding?doi=10.1037%2Fa0031438">Seli et al.&nbsp;(2017)</a> sought to demonstrate that MW-D was negligibly (or not at all) associated with each of the four OCD dimensions, we can use the <code>neg.reg</code> function. But, before we do, we must first define what is a (practically) meaningful effect in this context, i.e., the SESOI. Ideally, the SESOI should be derived from substantive knowledge of the effects in the research area, prior to inspecting the data. Numerous approaches to selecting the SESOI are possible; however, these details are beyond the scope of this vignette. For more information on justifying the SESOI, with examples, we recommend reading Anvari and Lakens (2021) and Lakens et al.&nbsp;(2018).</p>
+<p>For our purposes, let’s set the SESOI at 5% of the maximum possible score on the Contamination dimension from the OCD scale. The Contamination subscale is measured from 0 to 20, therefore the SESOI was set at b = 1 (measured in unstandardized units of the outcome variable) such that <strong>our equivalence interval is (-1, 1)</strong>. We hence set <code>eil = -1</code> and <code>eiu = 1</code>. If the observed effect for MW-D and its associated uncertainty falls entirely within the SESOI bounds, from -1 to 1, we can conclude a negligible association between MW-D and Contamination.</p>
+<p>With access to the dataset, users should first import their data file into the RStudio environment. The object name under which the imported dataset is saved (e.g., ocd) should then be inserted as the input for the first argument in the <code>neg.reg</code> function, such as <code>data = ocd</code>.</p>
+<p>The next argument, <code>formula =</code>, requires the user to specify the regression model consisting of the outcome (i.e., criterion/dependent variable) to the left of the tilde symbol (<code>~</code>), followed by all the predictor variables in the model with the <code>+</code> sign between each predictor name.</p>
+<p>Users should identify the exact variable names in the imported dataset they are interested in modelling and pay close attention to lower or capital case. In our example, the first outcome variable is contamination (one of the OCD symptomatology dimensions), labelled here <code>ocd_cont</code>. We have only two predictors in our example model, MW-D and MW-S (<code>MWD + MWS</code>), which then go to the left of the <code>~</code>, such as <code>formula = ocd_cont ~ MWD + MWS</code>.</p>
+<p>The <code>predictor =</code> argument asks users to specify which of the predictors they would like to test for a negligible effect. Because <a href="https://psycnet.apa.org/doiLanding?doi=10.1037%2Fa0031438">Seli et al.&nbsp;(2017)</a> hypothesized a negligible or no association of MW-D with the outcomes, we specified <code>predictor = MWD</code> in the code example below.</p>
+<section id="putting-it-all-together-when-data-is-available" class="level4">
+<h4 class="anchored" data-anchor-id="putting-it-all-together-when-data-is-available">Putting It All Together (when data is available)</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(negligible) <span class="co"># load the package</span></span>
+<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">neg.reg</span>(<span class="at">data =</span> ocd, <span class="co"># name of dataset </span></span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">formula =</span> ocd_cont <span class="sc">~</span> MWD <span class="sc">+</span> MWS, <span class="co"># regression formula </span></span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">predictor =</span> MWD, <span class="co"># name of the predictor of interest </span></span>
+<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">eiu =</span> <span class="dv">1</span>, <span class="co"># upper bound of SESOI (unstandardized) </span></span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">eil =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="co"># lower bound of SESOI (unstandardized) </span></span>
+<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">std =</span> <span class="cn">FALSE</span>, <span class="co"># using unstandardized units </span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-9" class="code-annotation-target"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">bootstrap =</span> <span class="cn">FALSE</span>) <span class="co"># not using bootstrap in example</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="9" data-code-annotation="1">Note that each argument is separated by a comma except for the last argument which precedes the close bracket, indicating the end of the function input.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output-display">
+<p><img src="welcome-to-neg.reg_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="welcome-to-neg.reg_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+*** Evaluating Negligible Effects Between Predictor and Outcome in Multiple Regression ***
+
+Unstandardized regression coefficient for MWD:
+b = -0.018, 95% CI [-0.109, 0.072]
+std. error = 0.046
+
+**********************
+
+Anderson-Hauck (AH) procedure: 
+
+Equivalence interval: lower= -1, upper= 1
+Anderson-Hauck T statistic = -0.4
+p &lt; 0.001
+NHST decision: The null hypothesis that the regression coefficient is non-negligible can be rejected. A negligible effect is concluded. Be sure to interpret the magnitude (and precision) of the effect size.
+
+*Note that in rare cases, where p is close to α, NHST decisions using the AH procedure may not match TOST NHST results or the Symmetric CI Approach at 100*(1-2α)% illustrated in the plots. 
+
+**********************
+
+Proportional Distance 
+
+Proportional distance: -0.018 
+95% confidence interval for the proportional distance: (-0.115, 0.079)
+
+*Note that the confidence interval for the proportional distance may not be precise with small sample sizes 
+******************* </code></pre>
+</div>
+</div>
+<p>In Example 1 above, we used the <code>neg.reg</code> function with access to the raw data to answer whether deliberate mind wandering truly has a negligible association with contamination, partialling out the effect of spontaneous mind wandering. Results from the negligible effect testing approach using the neg.reg function are congruent with <a href="https://psycnet.apa.org/doiLanding?doi=10.1037%2Fa0031438">Seli et al.’s (2017)</a> conclusion, which was obtained from a statistically nonsignificant difference-based test. It is often the case, however, that results from negligible effect testing contradict negligible association conclusions made using results from a nonsignificant difference-based test; this scenario will be demonstrated in Example 2 in the following section. Example 2 also shows how users can employ the <code>neg.reg</code> function without access to raw data.</p>
+</section>
+</section>
+<section id="example-2-personal-control-moderates-the-association-between-organizational-stability-and-identification" class="level3">
+<h3 class="anchored" data-anchor-id="example-2-personal-control-moderates-the-association-between-organizational-stability-and-identification">Example 2: Personal Control Moderates the Association Between Organizational Stability and Identification</h3>
+<p><a href="https://www-sciencedirect-com.ezproxy.library.yorku.ca/science/article/pii/S0022103117306832">Proudfoot and Kay (2018)</a> predicted that feelings of personal control would moderate the relationship between perceived organizational stability and organization identification. Specifically, they wished to demonstrate that a relationship between organizational stability and identification exists for participants with low personal control (“control threat” condition), <em>but that no such effect is present for participants with high personal control (“control affirmation” condition)</em>.</p>
+<p>To test their hypothesis, the authors modeled an interaction between organizational stability and personal control on organization identification in their multiple regression analysis. As reported in Study 3, the control × stability interaction (higher-order effect) was indeed statistically significant. Inspecting the simple slopes, the authors found that participants in the “control threat” condition exhibited a statistically significant relationship between stability and identification, whereas participants in the “control affirmation” condition did not, <span class="math inline">b = 0.15, SE = .12, t(190) = 1.18, p = .24</span>. It was concluded that “for participants who recalled an event wherein they had control, there was no effect of perceived organizational stability on identification” (<a href="https://www-sciencedirect-com.ezproxy.library.yorku.ca/science/article/pii/S0022103117306832">Proudfoot &amp; Kay, 2018, p.&nbsp;110</a>).</p>
+<p>In this example, we do not have access to the dataset. Still, we can formally test whether the association between perceived organizational stability on identification is indeed negligible for participants in the “control affirmation” condition using the <code>neg.reg</code> function. Specifically, we will need the following:</p>
+<ul>
+<li><p>the <em>regression coefficient point estimate</em> for organizational stability (<span class="math inline">b = 0.15</span>) and its <em>associated standard error</em> (<span class="math inline">SE = 0.12</span>),</p></li>
+<li><p>the <em>sample size</em> used in the analysis (<span class="math inline">n = 194</span>),</p></li>
+<li><p>the <em>number of predictors</em> in the multiple regression model (<span class="math inline">k = 3</span>),</p></li>
+<li><p>and the <em>nominal Type I error rate</em> (<span class="math inline">α = .05</span>).</p></li>
+</ul>
+<p>Note that the reported effect and its associated standard error are measured in unstandardized units.</p>
+<p>Again, we must identify our definition of practical significance in this context (selecting a SESOI). Let’s consider a SESOI of <span class="math inline">b = 0.33</span> (measured in unstandardized units).</p>
+<p>We can now plug the input into the <code>neg.reg</code> function’s arguments as demonstrated below</p>
+<section id="putting-it-all-together-when-data-is-unavailable" class="level4">
+<h4 class="anchored" data-anchor-id="putting-it-all-together-when-data-is-unavailable">Putting It All Together (when data is unavailable)</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">neg.reg</span>(<span class="at">b =</span> <span class="fl">0.15</span>, <span class="co"># effect size of the predictor of interest</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">se =</span> <span class="fl">0.12</span>, <span class="co"># standard error associated with the effect</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="dv">194</span>, <span class="co"># sample size used in the analysis</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">nop =</span> <span class="dv">3</span>, <span class="co"># number of predictors         </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">eiu =</span> <span class="fl">0.33</span>, <span class="co"># upper bound of SESOI (unstandardized)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">eil =</span> <span class="sc">-</span><span class="fl">0.33</span>, <span class="co"># lower bound of SESOI (unstandardized)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">std =</span> <span class="cn">FALSE</span>) <span class="co"># using unstandardized units</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+*** Evaluating Negligible Effects Between Predictor and Outcome in Multiple Regression ***
+
+Unstandardized regression coefficient for predictor of interest:
+b = 0.15, 95% CI [-0.087, 0.387]
+std. error = 0.12
+
+**********************
+
+Anderson-Hauck (AH) procedure: 
+
+Equivalence interval: lower= -0.33, upper= 0.33
+Anderson-Hauck T statistic = 1.25
+p = 0.068
+NHST decision: The null hypothesis that the regression coefficient is non-negligible cannot be rejected. There is insufficient evidence to conclude a negligible effect. Be sure to interpret the magnitude (and precision) of the effect size.
+
+*Note that in rare cases, where p is close to α, NHST decisions using the AH procedure may not match TOST NHST results or the Symmetric CI Approach at 100*(1-2α)% illustrated in the plots. 
+
+**********************
+
+Proportional Distance 
+
+Proportional distance: 0.455 
+95% confidence interval for the proportional distance: (-0.263, 1.172)
+
+*Note that the confidence interval for the proportional distance may not be precise with small sample sizes 
+******************* </code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="welcome-to-neg.reg_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="welcome-to-neg.reg_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="additional-features" class="level2">
+<h2 class="anchored" data-anchor-id="additional-features">Additional Features</h2>
+<p>Finally, there are additional, optional features included in the function such as using bootstrap (and setting the number of iterations and/or seed) to calculate the standard errors, changing test type from AH (default) to TOST or nominal Type I error from .05 to another, custom rate, saving the resulted plots locally (e.g., as .png, or .jpeg) etc. Users are welcome to test these features following these brief argument definitions:</p>
+<ul>
+<li><code>plots</code>: If <code>TRUE</code>, plot will be generated in the output (highly recommended)</li>
+<li><code>test</code>: <code>"AH"</code> is the default based on recommendation in <a href="https://www.tqmp.org/RegularArticles/vol19-1/p059/p059.pdf">Alter &amp; Counsell (2023)</a>, <code>"TOST"</code> is an additional option</li>
+<li><code>bootstrap</code>: logical, default is <code>TRUE</code>, incorporating bootstrapping when calculating regression coefficients, SE, and CIs</li>
+<li><code>nboot</code>: <code>1000</code> is the default. Indicates if other number of bootstrapping iterations is desired</li>
+<li><code>saveplots</code>: <code>FALSE</code> for no, <code>"png"</code> and <code>"jpeg"</code> for different formats</li>
+<li><code>seed</code>: to reproduce previous analyses using bootstrapping, the user can set their seed of choice</li>
+</ul>
+</section>
+<section id="other-considerations" class="level2">
+<h2 class="anchored" data-anchor-id="other-considerations">Other Considerations</h2>
+<p><strong>It is necessary to be consistent with the units of measurement.</strong> For example, unstandardized negligible interval bounds (i.e., <code>eil</code> and <code>eiu</code>) must only be used when <code>std = FALSE</code> (default). If the effect size (<code>b</code>), standard error (<code>se</code>), and sample size (<code>n</code>) are entered manually as arguments (i.e., without the dataset), these should also be in the same units of measurements. Whereas if the user prefers to specify <code>eiu</code> and <code>eil</code> in standardized unites, <code>std = TRUE</code> should be specified. In which case, any units entered into the function must also be in standardized form. Mixing unstandardized and standardized units would yield inaccurate results and likely lead to invalid conclusions. Thus, users must be cognizant of the measurement units of the negligible interval.</p>
+<p>The proportional distance (PD; effect size/eiu) estimates the proportional distance of the estimated effect to eiu, and acts as an alternative effect size measure.</p>
+<p>The confidence interval for the PD is computed via bootstrapping (percentile bootstrap), unless the user does not insert a dataset. In which case, the PD confidence interval is calculated by dividing the upper and lower CI bounds for the effect size estimate by the absolute value of the negligible interval bounds.</p>
+<p>For additional resources, see:</p>
+<ul>
+<li><a href="https://www.tqmp.org/RegularArticles/vol19-1/p059/p059.pdf">Alter &amp; Counsell (2023)</a></li>
+<li><a href="https://udialter.shinyapps.io/negreg-shiny/">Shiny app</a></li>
+<li><a href="https://udialter.github.io/Alter-and-Counsell--2023--Interactive-Dashboard.html">Interactive Dashboard</a></li>
+</ul>
+<!-- -->
+
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Handle positioning of the toggle
+      window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Start Using the `neg.reg` Function"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "From the `negligible` R package"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Udi Alter"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="an">title-block-banner:</span><span class="co"> true</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools:</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">      source: true</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">      toggle: true</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">      caption: none</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: Contents</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">    theme:</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">      light: Litera</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">      dark: solar</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">    html-math-method: katex</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">    css: styles.css</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">    code_download: yes</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">    code-annotations: hover</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">### Goal</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>This function evaluates **whether a certain predictor variable in a multiple regression model can be considered statistically and practically negligible** according to a predefined interval. i.e., minimally meaningful effect size (MMES)/smallest effect size of interest (SESOI). The effect tested is the (partial) relationship between the predictor of interest and the outcome variable, holding all other predictors constant.</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="fu">### Background</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>Unlike most common null hypothesis significance tests looking to detect a difference or the existence of an effect statistically different than zero, **in negligible effect testing, the hypotheses are flipped: In essence,** $H_0$ states that the effect is non-negligible, whereas $H_1$ states that the effect is in fact statistically and practically negligible.</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>The statistical tests are based on Anderson-Hauck (1983) and Schuirmann's (1987) Two One-Sided Test (TOST) equivalence testing procedures; namely addressing the question of **whether the estimated effect size (and its associated uncertainty) of a predictor variable in a multiple regression model is smaller than the what the user defines as negligible effect size.** Defining what is considered negligible effect is done by specifying the negligible (equivalence) interval: its upper (<span class="in">`eiu`</span>) and lower (<span class="in">`eil`</span>) bounds.</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>The negligible (equivalence) interval should be set based on the context of the research. Because the predictor's effect size can be in either standardized or unstandardized units, setting <span class="in">`eil`</span> and <span class="in">`eiu`</span> is a matter of determining what magnitude of the relationship between predictor and outcome in either standardized or unstandardized units is the minimally meaningful effect size given the context of the research.</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Instructions</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>There are two main approaches to using <span class="in">`neg.reg`</span>:</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The first **(and recommended)** is by inserting a dataset (<span class="in">`data = `</span> argument) into the function. If the user/s have access to the dataset, they should use the following set of arguments: <span class="in">`data =`</span>, <span class="in">`formula =`</span>, <span class="in">`predictor =`</span>, <span class="in">`bootstrap =`</span> (optional), <span class="in">`nboot =`</span> (optional), and <span class="in">`seed =`</span> (optional). However, this function also accommodates cases where no dataset is available which is discussed next.</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The second approach should be used when the dataset is not available. In this case, users can use the following set of arguments instead: <span class="in">`b =`</span>, <span class="in">`se =`</span>, <span class="in">`n =`</span>, and <span class="in">`nop =`</span>. In either situation, users must specify the negligible interval bounds (<span class="in">`eiu =`</span> and <span class="in">`eil =`</span>). </span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>Other optional arguments and features include: <span class="in">`alpha =`</span>, <span class="in">`std =`</span>, <span class="in">`test =`</span>, <span class="in">`plots =`</span>, and <span class="in">`saveplots =`</span>.</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="fu">## Applied Examples</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example 1: “Unlinking” Deliberate Mind Wandering and OCD Symptomatology</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>Our first example comes from <span class="co">[</span><span class="ot">Seli et al. (2017)</span><span class="co">](https://psycnet.apa.org/doiLanding?doi=10.1037%2Fa0031438)</span> where the authors investigated the relationship between everyday experiences of mind wandering and OCD symptomatology. Seli and colleagues make a clear distinction between two types of mind wandering: the first is an unintentional, spontaneous mind wandering (MW-S), and the second is a voluntary and deliberate off-task thought (MW-D). This distinction is important because the authors hypothesized that MW-S will show a meaningful relationship with each of the four dimensions of OCD (contamination, responsibility for harm and mistakes, unacceptable thoughts, and symmetry/completeness) whereas MW-D will demonstrate a negligible, or no, association.</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>Because <span class="co">[</span><span class="ot">Seli et al. (2017)</span><span class="co">](https://psycnet.apa.org/doiLanding?doi=10.1037%2Fa0031438)</span> sought to demonstrate that MW-D was negligibly (or not at all) associated with each of the four OCD dimensions, we can use the <span class="in">`neg.reg`</span> function. But, before we do, we must first define what is a (practically) meaningful effect in this context, i.e., the SESOI. Ideally, the SESOI should be derived from substantive knowledge of the effects in the research area, prior to inspecting the data. Numerous approaches to selecting the SESOI are possible; however, these details are beyond the scope of this vignette. For more information on justifying the SESOI, with examples, we recommend reading Anvari and Lakens (2021) and Lakens et al. (2018).</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>For our purposes, let's set the SESOI at 5% of the maximum possible score on the Contamination dimension from the OCD scale. The Contamination subscale is measured from 0 to 20, therefore the SESOI was set at b = 1 (measured in unstandardized units of the outcome variable) such that **our equivalence interval is (-1, 1)**. We hence set <span class="in">`eil = -1`</span> and <span class="in">`eiu = 1`</span>. If the observed effect for MW-D and its associated uncertainty falls entirely within the SESOI bounds, from -1 to 1, we can conclude a negligible association between MW-D and Contamination.</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>With access to the dataset, users should first import their data file into the RStudio environment. The object name under which the imported dataset is saved (e.g., ocd) should then be inserted as the input for the first argument in the <span class="in">`neg.reg`</span> function, such as <span class="in">`data = ocd`</span>. </span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>The next argument, <span class="in">`formula =`</span>, requires the user to specify the regression model consisting of the outcome (i.e., criterion/dependent variable) to the left of the tilde symbol (<span class="in">`~`</span>), followed by all the predictor variables in the model with the <span class="in">`+`</span> sign between each predictor name. </span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>Users should identify the exact variable names in the imported dataset they are interested in modelling and pay close attention to lower or capital case. In our example, the first outcome variable is contamination (one of the OCD symptomatology dimensions), labelled here <span class="in">`ocd_cont`</span>. We have only two predictors in our example model, MW-D and MW-S (<span class="in">`MWD + MWS`</span>), which then go to the left of the <span class="in">`~`</span>, such as <span class="in">`formula = ocd_cont ~ MWD + MWS`</span>.</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>The <span class="in">`predictor =`</span> argument asks users to specify which of the predictors they would like to test for a negligible effect. Because <span class="co">[</span><span class="ot">Seli et al. (2017)</span><span class="co">](https://psycnet.apa.org/doiLanding?doi=10.1037%2Fa0031438)</span> hypothesized a negligible or no association of MW-D with the outcomes, we specified <span class="in">`predictor = MWD`</span> in the code example below.</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Putting It All Together (when data is available)</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: hold</span></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>OCD <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"/Users/udialter/Library/CloudStorage/GoogleDrive-udi.alter@gmail.com/My Drive/Master's thesis/OCD and MW (Seli et al., 2017).sav"</span>) <span class="co"># Uploading data</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(OCD)</span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>ocd <span class="ot">&lt;-</span> OCD <span class="co"># dublicating dataset for manipulation </span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="co"># renaming columns to slighetly easier names</span></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(ocd) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ID"</span>, <span class="st">"sample"</span>, <span class="st">"age"</span>,<span class="st">"gender"</span>, <span class="st">"hand"</span>, <span class="st">"MWS"</span>, <span class="st">"MWD"</span>, <span class="st">'BSCS'</span>, <span class="st">'ocd_cont'</span>, <span class="st">'ocd_resp'</span>, <span class="st">'ocd_unacpthts'</span>, <span class="st">'ocd_symm'</span>)</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ocd)</span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="co"># leaving only relevant variables  </span></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>ocd <span class="ot">&lt;-</span> ocd <span class="sc">%&gt;%</span> </span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">"ID"</span>, <span class="st">"MWS"</span>, <span class="st">"MWD"</span>, <span class="st">"ocd_cont"</span>, <span class="st">"ocd_resp"</span>, <span class="st">"ocd_unacpthts"</span>, <span class="st">"ocd_symm"</span>)</span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(negligible) <span class="co"># load the package</span></span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a><span class="fu">neg.reg</span>(<span class="at">data =</span> ocd, <span class="co"># name of dataset </span></span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>        <span class="at">formula =</span> ocd_cont <span class="sc">~</span> MWD <span class="sc">+</span> MWS, <span class="co"># regression formula </span></span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>        <span class="at">predictor =</span> MWD, <span class="co"># name of the predictor of interest </span></span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a>        <span class="at">eiu =</span> <span class="dv">1</span>, <span class="co"># upper bound of SESOI (unstandardized) </span></span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>        <span class="at">eil =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="co"># lower bound of SESOI (unstandardized) </span></span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>        <span class="at">std =</span> <span class="cn">FALSE</span>, <span class="co"># using unstandardized units </span></span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a>        <span class="at">bootstrap =</span> <span class="cn">FALSE</span>) <span class="co"># not using bootstrap in example # &lt;1&gt;</span></span>
+<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Note that each argument is separated by a comma except for the last argument which precedes the close bracket, indicating the end of the function input.</span>
+<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a>In Example 1 above, we used the <span class="in">`neg.reg`</span> function with access to the raw data to answer whether deliberate mind wandering truly has a negligible association with contamination, partialling out the effect of spontaneous mind wandering. Results from the negligible effect testing approach using the neg.reg function are congruent with <span class="co">[</span><span class="ot">Seli et al.’s (2017)</span><span class="co">](https://psycnet.apa.org/doiLanding?doi=10.1037%2Fa0031438)</span> conclusion, which was obtained from a statistically nonsignificant difference-based test. It is often the case, however, that results from negligible effect testing contradict negligible association conclusions made using results from a nonsignificant difference-based test; this scenario will be demonstrated in Example 2 in the following section. Example 2 also shows how users can employ the <span class="in">`neg.reg`</span> function without access to raw data.</span>
+<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example 2: Personal Control Moderates the Association Between Organizational Stability and Identification</span></span>
+<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Proudfoot and Kay (2018)</span><span class="co">](https://www-sciencedirect-com.ezproxy.library.yorku.ca/science/article/pii/S0022103117306832)</span> predicted that feelings of personal control would moderate the relationship between perceived organizational stability and organization identification. Specifically, they wished to demonstrate that a relationship between organizational stability and identification exists for participants with low personal control (“control threat” condition), *but that no such effect is present for participants with high personal control (“control affirmation” condition)*. </span>
+<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a>To test their hypothesis, the authors modeled an interaction between organizational stability and personal control on organization identification in their multiple regression analysis. As reported in Study 3, the control × stability interaction (higher-order effect) was indeed statistically significant. Inspecting the simple slopes, the authors found that participants in the “control threat” condition exhibited a statistically significant relationship between stability and identification, whereas participants in the “control affirmation” condition did not, $b = 0.15, SE = .12, t(190) = 1.18, p = .24$. It was concluded that “for participants who recalled an event wherein they had control, there was no effect of perceived organizational stability on identification” (<span class="co">[</span><span class="ot">Proudfoot &amp; Kay, 2018, p. 110</span><span class="co">](https://www-sciencedirect-com.ezproxy.library.yorku.ca/science/article/pii/S0022103117306832)</span>). </span>
+<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a>In this example, we do not have access to the dataset. Still, we can formally test whether the association between perceived organizational stability on identification is indeed negligible for participants in the “control affirmation” condition using the <span class="in">`neg.reg`</span> function.  Specifically, we will need the following: </span>
+<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the *regression coefficient point estimate* for organizational stability ($b = 0.15$) and its *associated standard error* ($SE = 0.12$), </span>
+<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the *sample size* used in the analysis ($n = 194$), </span>
+<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the *number of predictors* in the multiple regression model ($k = 3$), </span>
+<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>and the *nominal Type I error rate* ($α = .05$). </span>
+<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a>Note that the reported effect and its associated standard error are measured in unstandardized units. </span>
+<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a>Again, we must identify our definition of practical significance in this context (selecting a SESOI). Let's consider a SESOI of $b = 0.33$ (measured in unstandardized units).</span>
+<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a>We can now plug the input into the <span class="in">`neg.reg`</span> function’s arguments as demonstrated below</span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Putting It All Together (when data is unavailable)</span></span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a><span class="fu">neg.reg</span>(<span class="at">b =</span> <span class="fl">0.15</span>, <span class="co"># effect size of the predictor of interest</span></span>
+<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a>        <span class="at">se =</span> <span class="fl">0.12</span>, <span class="co"># standard error associated with the effect</span></span>
+<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="dv">194</span>, <span class="co"># sample size used in the analysis</span></span>
+<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a>        <span class="at">nop =</span> <span class="dv">3</span>, <span class="co"># number of predictors         </span></span>
+<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a>        <span class="at">eiu =</span> <span class="fl">0.33</span>, <span class="co"># upper bound of SESOI (unstandardized)</span></span>
+<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a>        <span class="at">eil =</span> <span class="sc">-</span><span class="fl">0.33</span>, <span class="co"># lower bound of SESOI (unstandardized)</span></span>
+<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a>        <span class="at">std =</span> <span class="cn">FALSE</span>) <span class="co"># using unstandardized units</span></span>
+<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a><span class="fu">## Additional Features</span></span>
+<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a>Finally, there are additional, optional features included in the function such as using bootstrap (and setting the number of iterations and/or seed) to calculate the standard errors, changing test type from AH (default) to TOST or nominal Type I error from .05 to another, custom rate, saving the resulted plots locally (e.g., as .png, or .jpeg) etc. Users are welcome to test these features following these brief argument definitions:</span>
+<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`plots`</span>: If <span class="in">`TRUE`</span>, plot will be generated in the output (highly recommended)</span>
+<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`test`</span>: <span class="in">`"AH"`</span> is the default based on recommendation in <span class="co">[</span><span class="ot">Alter &amp; Counsell (2023)</span><span class="co">](https://www.tqmp.org/RegularArticles/vol19-1/p059/p059.pdf)</span>, <span class="in">`"TOST"`</span> is an additional option</span>
+<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`bootstrap`</span>: logical, default is <span class="in">`TRUE`</span>, incorporating bootstrapping when calculating regression coefficients, SE, and CIs</span>
+<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`nboot`</span>: <span class="in">`1000`</span> is the default. Indicates if other number of bootstrapping iterations is desired</span>
+<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`saveplots`</span>: <span class="in">`FALSE`</span> for no, <span class="in">`"png"`</span> and <span class="in">`"jpeg"`</span> for different formats</span>
+<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`seed`</span>: to reproduce previous analyses using bootstrapping, the user can set their seed of choice</span>
+<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a><span class="fu">## Other Considerations</span></span>
+<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a>**It is necessary to be consistent with the units of measurement.** For example, unstandardized negligible interval bounds (i.e., <span class="in">`eil`</span> and <span class="in">`eiu`</span>) must only be used when <span class="in">`std = FALSE`</span> (default). If the effect size (<span class="in">`b`</span>), standard error (<span class="in">`se`</span>), and sample size (<span class="in">`n`</span>) are entered manually as arguments (i.e., without the dataset), these should also be in the same units of measurements. Whereas if the user prefers to specify <span class="in">`eiu`</span> and <span class="in">`eil`</span> in standardized unites, <span class="in">`std = TRUE`</span> should be specified. In which case, any units entered into the function must also be in standardized form. Mixing unstandardized and standardized units would yield inaccurate results and likely lead to invalid conclusions. Thus, users must be cognizant of the measurement units of the negligible interval.</span>
+<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>The proportional distance (PD; effect size/eiu) estimates the proportional distance of the estimated effect to eiu, and acts as an alternative effect size measure.</span>
+<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>The confidence interval for the PD is computed via bootstrapping (percentile bootstrap), unless the user does not insert a dataset. In which case, the PD confidence interval is calculated by dividing the upper and lower CI bounds for the effect size estimate by the absolute value of the negligible interval bounds.</span>
+<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a>For additional resources, see:</span>
+<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Alter &amp; Counsell (2023)</span><span class="co">](https://www.tqmp.org/RegularArticles/vol19-1/p059/p059.pdf)</span></span>
+<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Shiny app</span><span class="co">](https://udialter.shinyapps.io/negreg-shiny/)</span></span>
+<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Interactive Dashboard</span><span class="co">](https://udialter.github.io/Alter-and-Counsell--2023--Interactive-Dashboard.html)</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>
