@@ -8,6 +8,7 @@
 
 [Open materials and additional resources](https://osf.io/w96xe/)
 
+[`neg.reg` vignette](welcome to neg.reg.html) 
 
 
 <br><br><br><br><br>
