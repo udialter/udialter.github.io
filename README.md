@@ -16,4 +16,4 @@
 
 [MLM centring](centeringMLM.gif)
 <br><br><br><br><br>
-[IDDVs examples](CPA-presentation-Examples.html) 
+[IDDVs examples](presentation-Examples.html) 
