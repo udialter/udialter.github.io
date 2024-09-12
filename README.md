@@ -1,8 +1,7 @@
-# DETERMINING NEGLIGIBLE ASSOCIATIONS IN REGRESSION
+# Stuff Udi wants online
 
 
 ### Alter & Counsell (2023)
-
 
 [Interactive dashboard](Alter-and-Counsell--2023--Interactive-Dashboard.html) 
 
@@ -15,7 +14,12 @@
 <br><br><br><br><br>
 
 
-
+### Multilevel modeling centring predictors illustrative GIF (thanks to Carmen Dang)
 [MLM centring](centeringMLM.gif)
-<br><br><br><br><br>
+<br><br><br><br><be>
+
+### Raising the Bar Graph: Upgrading to Interactive Dynamic Data Visualizations in Psychology
+[Raising the bar graph "blog post"]()
 [IDDVs examples](presentation-Examples.html) 
+
+### 
