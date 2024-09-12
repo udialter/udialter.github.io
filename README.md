@@ -19,7 +19,8 @@
 <br><br><br><br><be>
 
 ### Raising the Bar Graph: Upgrading to Interactive Dynamic Data Visualizations in Psychology
-[Raising the bar graph "blog post"]()
+[Raising the bar graph "blog post"](Alter-finalproject.html)
 [IDDVs examples](presentation-Examples.html) 
 
-### 
+### Shrinking Concerns Over Multiple Testing with Multilevel Modeling 
+[Dissertation Proposal: Illustrative Example Study 1]()
