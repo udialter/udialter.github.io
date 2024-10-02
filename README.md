@@ -24,3 +24,7 @@
 
 ### Shrinking Concerns Over Multiple Testing with Multilevel Modeling 
 [Dissertation Proposal: Illustrative Example Study 1](dissertation_proposal_illustrative_example_Study_1.html)
+
+### 3032
+
+[first class slides](firstclass3032.html)
