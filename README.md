@@ -27,4 +27,6 @@
 
 ### 3032
 
+[course syllabus](Course-Syllabus.html)
+
 [first class slides](firstclass3032.html)
