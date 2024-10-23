@@ -35,3 +35,12 @@
 ### Slides
 
 [SCS presentation Bayesian Inference Chapter 3 CASI Example 2 DIY](SCS-chapter-3-Bayesian-Inference--Example-2-DIY-.html)
+
+### R Materials
+[Week 1 R Basics](Class-1-html.html)
+
+[Week 2]()
+
+[Week 3]()
+
+[Week 4]()
