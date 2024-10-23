@@ -30,3 +30,8 @@
 [course syllabus](Course-Syllabus.html)
 
 [first class slides](firstclass3032.html)
+
+
+### Slides
+
+[SCS presentation Bayesian Inference Chapter 3 CASI Example 2 DIY](SCS-chapter-3-Bayesian-Inference--Example-2-DIY-.html)
