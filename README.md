@@ -41,6 +41,6 @@
 
 [Week 2](Week-2-Notes-HTML.html)
 
-[Week 3]()
+[Week 3 Statistical Analyses](Statistical-Analyses.html)
 
-[Week 4]()
+[Week 4 ggplot2 and ggplotly](ggplot2-live.html)
