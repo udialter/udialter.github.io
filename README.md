@@ -39,7 +39,7 @@
 ### R Materials
 [Week 1 R Basics](Class-1-html.html)
 
-[Week 2]()
+[Week 2](Week-2-Notes-HTML.html)
 
 [Week 3]()
 
