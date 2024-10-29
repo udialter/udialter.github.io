@@ -48,4 +48,6 @@
 
 ### Application Materials
 
-[teaching-feedback-dahsboard](dashboard.html)
+[Teaching Feedback Dahsboard](dashboard.html)
+
+[Navigating the Bayes Maze Sup. Mat.](Supplementary_Materials_Navigating_the_Bayes_Maze.html)
