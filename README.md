@@ -44,3 +44,8 @@
 [Week 3 Statistical Analyses](Statistical-Analyses.html)
 
 [Week 4 ggplot2 and ggplotly](ggplot2-live.html)
+
+
+### Application Materials
+
+[teaching-feedback-dahsboard](dashboard.html)
