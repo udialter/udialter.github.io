@@ -29,7 +29,7 @@
 
 [course syllabus](Course-Syllabus.html)
 
-[first class slides](firstclass3032.html)
+[first class slides](Module1_Part1.html.html)
 
 
 ### Slides
