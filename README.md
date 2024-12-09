@@ -31,6 +31,8 @@
 
 [Module 1 Part 1](Module1_Part1.html)
 
+[Module 1 Part 2](Module1_Part2.html)
+
 
 ### Slides
 
