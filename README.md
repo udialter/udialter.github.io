@@ -33,7 +33,7 @@
 
 [Module 1 Part 2](Module1_Part2.html)
 
-[[Module 2 Part 1](Module2_Part1.html)
+[Module 2 Part 1](Module2_Part1.html)
 
 
 ### Slides
