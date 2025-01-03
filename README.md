@@ -33,6 +33,8 @@
 
 [Module 1 Part 2](Module1_Part2.html)
 
+[[Module 2 Part 1](Module2_Part1.html)
+
 
 ### Slides
 
@@ -50,6 +52,6 @@
 
 ### Application Materials
 
-[Teaching Feedback Dahsboard](dashboard.html)
+[Teaching Evaluations Dahsboard](dashboard.html)
 
 [Navigating the Bayes Maze Sup. Mat.](NBM_SupMat.html)
