@@ -35,6 +35,7 @@
 
 [Module 2 Part 1](Module2_Part1.html)
 
+[Module 2 Part 2](Module2_Part2.html)
 
 ### Slides
 
