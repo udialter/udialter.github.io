@@ -39,6 +39,8 @@
 
 [Module 3](Module3_MLR.html)
 
+[Simpson's Paradox in 3D](simpsons_paradox_3D.html)
+
 ### Slides
 
 [SCS presentation Bayesian Inference Chapter 3 CASI Example 2 DIY](SCS-chapter-3-Bayesian-Inference--Example-2-DIY-.html)
