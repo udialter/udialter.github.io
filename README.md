@@ -41,7 +41,9 @@
 
 [Simpson's Paradox in 3D](simpsons_paradox_3D.html)
 
-[Module 4](Module4_diagnostics.html)
+[Module 4 Part 1](Module4_Part1.html)
+
+[Module 4 Part 2](Module4_Part2.html)
 
 
 ### Slides
