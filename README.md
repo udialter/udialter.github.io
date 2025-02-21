@@ -45,6 +45,8 @@
 
 [Module 4 Part 2](Module4_Part2.html)
 
+[Module 5](Module5.html)
+
 
 ### Slides
 
