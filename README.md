@@ -47,7 +47,11 @@
 
 [Module 5](Module5.html)
 
-[Module 6](Module6.html)
+[Module 6 Part 1](Module6.html)
+
+[Module 6 Part 2](Module6_part2.html)
+
+
 
 
 ### Slides
