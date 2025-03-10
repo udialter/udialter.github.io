@@ -49,7 +49,7 @@
 
 [Module 6 Part 1](Module6.html)
 
-[Module 6 Part 2](Module6_part2.html)
+[Module 6 Part 2 + A1 review](Module6_part2_A1.html)
 
 
 
