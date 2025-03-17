@@ -51,6 +51,8 @@
 
 [Module 6 Part 2 + A1 review](Module6_part2_A1.html)
 
+[Module 7 Part 1](Module7_part1.html)
+
 
 
 
