@@ -53,6 +53,8 @@
 
 [Module 7 Part 1](Module7_part1.html)
 
+[Module 7 Part 2](Module7_part2.html)
+
 
 
 
