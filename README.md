@@ -80,4 +80,4 @@
 
 [Shrinkage demonstration](Shrinkage_Demo.html)
 
-[Link to factorial design quiz Shiny app; not optimized for phones](https://udialter.shinyapps.io/psyc212demo/)
+[Link to factorial design quiz Shiny app](https://udialter.shinyapps.io/psyc212demo/)
