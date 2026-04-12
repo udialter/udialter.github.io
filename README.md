@@ -80,4 +80,6 @@
 
 [Shrinkage demonstration](Shrinkage_Demo.html)
 
+[Bayesian MLM Shrinkage demonstration for defence](Shrinkage_Demo_Bayes.html)
+
 [Link to factorial design quiz Shiny app](https://udialter.shinyapps.io/psyc212demo/)
