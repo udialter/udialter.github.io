@@ -78,8 +78,6 @@
 
 [Navigating the Bayes Maze Sup. Mat.](NBM_SupMat.html)
 
-[Shrinkage demonstration](Shrinkage_Demo.html)
-
-[Bayesian MLM Shrinkage demonstration for defence](Shrinkage_Demo_Bayes.html)
+[Shrinkage demonstration](NEW_Shrinkage_Demo.html)
 
 [Link to factorial design quiz Shiny app](https://udialter.shinyapps.io/psyc212demo/)
