@@ -56,7 +56,9 @@
 [Module 7 Part 2](Module7_part2.html)
 
 
+### 2030
 
+[PSYC 2030 M syllabus](Syllabus PSYC 2030 M Winter 2026 Alter.pdf) 
 
 ### Slides
 
